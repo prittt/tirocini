@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciao</title>
+    <script>
+        window.onload = function(){
+          document.forms['form'].submit();
+        }
+
+    </script>
+</head>
+<body>
+
+<form method="post" action=" {% url 'tirociniApp:redirect' %}" name="form">
+     {% csrf_token %}
+    <input type="hidden" name="user" value="{{user}}">
+</form>
+</body>
+</html>

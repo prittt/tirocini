@@ -1,0 +1,67 @@
+<html lang="it-it" dir="ltr"><head>
+<title>Confermi? | Amministrazione</title>
+<link rel="stylesheet" type="text/css" href="/static/Moduli/base.css">
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/Moduli/responsive.css">
+
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+<body class=" app-tirociniApp model-richiesta delete-confirmation" data-admin-utc-offset="7200">
+
+<!-- Container -->
+<div id="container">
+
+
+    <!-- Header -->
+
+    <div id="header">
+        <div id="branding">
+
+<h1 id="site-name">tirociniApp Administration</h1>
+
+        </div>
+    </div>
+
+    <!-- END Header -->
+
+
+
+
+
+    <div class="main shifted" id="main">
+
+      <div class="content">
+   <!-- Content -->
+        <div id="content" class="colM">
+
+          <h1>Confermi?</h1>
+
+    <p>Sicuro di voler cancellare richiesta ?</p>
+
+    <form method="post">
+    {% csrf_token %}
+    <div>
+    <input type="hidden" name="post" value="yes">
+
+
+    <input type="submit" value="Sì, sono sicuro">
+    <a href="javascript:history.back()" class="button cancel-link">No, torna indietro</a>
+    </div>
+    </form>
+
+
+
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+      </div>
+    </div>
+</div>
+<!-- END Container -->
+
+
+</body></html>

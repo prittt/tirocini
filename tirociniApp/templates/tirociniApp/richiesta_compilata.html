@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{{richiesta.nome}} {{richiesta.cognome}}</title>
+    <link rel="stylesheet" type="text/css" href="{{pathCSS}}">
+    <style>
+        body{
+            background-image: url("/tirocini/static/images/Sigillo2015.png");
+            width:80%;
+            margin:auto;
+            font-family: system-ui;
+            font-size: 20pt;
+        }
+        img{
+            width:60%;
+            margin:0 20%;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+        }
+        .first{
+            text-align: left;
+        }
+        .second{
+            text-align: left;
+        }
+        td{
+            width:50%;
+
+        }
+
+    </style>
+</head>
+<body>
+    <img src="/tirocini/static/images/Sigillo2015.png" alt="logo_unimore"/>
+    <h2>Modulo inserito correttamente. Resoconto dati inseriti:</h2>
+    <table>
+        <tr>
+            <td class="first"><b>NOME :</b></td>
+            <td class="second">{{richiesta.studente.user.first_name}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>COGNOME :</b></td>
+            <td class="second">{{richiesta.studente.user.last_name}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>CODICE FISCALE :</b></td>
+            <td class="second">{{richiesta.studente.codice_fiscale}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>MATRICOLA :</b></td>
+            <td class="second">{{richiesta.studente.matricola}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>TUTOR :</b></td>
+            <td class="second">{{richiesta.tutor}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>SEDE :</b></td>
+            <td class="second">{{richiesta.sede}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>DURATA :</b></td>
+            <td class="second">{{richiesta.durata}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>DATA INIZIO :</b></td>
+            <td class="second">{{richiesta.data_inizio}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>DATA FINE :</b></td>
+            <td class="second">{{richiesta.data_fine}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>OBIETTIVI :</b></td>
+            <td class="second">{{richiesta.obiettivi}}</td>
+        </tr>
+        <tr>
+            <td class="first"><b>AUTOCERTIFICAZIONE :</b></td>
+            <td class="second">{% if richiesta.autocertificazione %}
+                <h2 style="color:green" >OK</h2>
+            {% else %}
+                <h2 style="color:red" >NOT GIVEN</h2>
+            {% endif %}</td>
+        </tr>
+
+    </table>
+
+</body>
+</html>

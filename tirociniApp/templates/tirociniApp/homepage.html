@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+    {% load static %}
+<html lang="it">
+<head>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    <link rel="shortcut icon" href="/tirocini/static/images/favicon.ico" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <title> Login </title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/modulo.css'%}">
+    <script>
+
+        function toggleAdminLoginVisibility() {
+            var x = document.getElementById("admin-login");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+    </script>
+
+
+
+
+
+    <meta charset="UTF-8">
+    <title>Richiesta Attività Progettuale</title>
+    <style type="text/css">
+        .col-sm {
+            float: left;
+            text-align: right;
+            padding-right: 5px;
+            width: 25%;
+            padding-top: 5px;
+            font-weight: 700;
+            display: inline;
+        }
+        .form-control{
+            width: 50%;
+        }
+        td{
+            padding: 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        body{
+            margin:1%;
+        }
+        .extend {
+            width: fit-content;
+            margin: auto;
+        }
+        p.alert{
+            text-align: center;
+            width: 45%;
+            margin: auto;
+        }
+
+    </style>
+
+</head>
+<body>
+<table id="head">
+    <tr>
+        <td class="first"><img id="logo" src="/tirocini/static/images/Sigillo2015.png" /></td>
+        <td class="second"><h1 id="title">Modulo di Richiesta per Tirocini ed Attività Progettuali</h1></td>
+    </tr>
+</table>
+{% if messages %}
+
+        {% for message in messages %}
+    <p {% if message.tags %}
+            class="{{ message.tags }}
+            {% if 'error' in message.tags %}
+                alert alert-danger
+            {% endif %}
+            {% if 'success' in message.tags %}
+                alert alert-success
+            {% endif %}
+                 "
+        {% endif %}>
+    {{ message }}
+</p>
+        {% endfor %}
+{% endif %}
+
+<div class="extend row justify-content-center">
+        <div class="col-12">
+            <h1 class="mt-2"> Login </h1>
+            <hr class="mt-0 mb-4">
+
+            <div class="row">
+                <div class="column col-12 text-left">
+                    <h4><a href="/tirocini/access" id="modal-autorizza-dati">Single
+                        Sign-On Unimore</a></h4>
+                    <div class="mb-2">
+                        <b>Clicca</b> il logo <b><a href="/tirocini/access" id="modal-autorizza-dati">Single SignOn</a></b> per il <b>login
+                        sicuro</b> con le credenziali della
+                        posta elettronica di
+                        ateneo.
+                    </div>
+                    <a href="/tirocini/access" id="modal-autorizza-dati"><img src="/tirocini/static/images/unimore-sso.png" alt="Login with Shibboleth"></a>
+                    <br>
+                    <br>
+                    <div class="alert alert-warning" role="alert">
+                        L'accesso al portale è consentito solo agli studenti regolarmente iscritti e al
+                        personale dell'Ufficio Stage.
+                    </div>
+                    <div><a href="#" onclick="toggleAdminLoginVisibility();return false;">Clicca qui per accedere al login per
+                        gli amministratori del sito.</a></div>
+                </div>
+            </div>
+            <div class="row" id="admin-login" style="display: none;">
+                <div class="column col-12">
+                    <br>
+                    <h4>Login per Amministratore</h4>
+
+                    <form method="post" action="{% url 'tirociniApp:loginAdmin' %}">
+                        {% csrf_token %}
+                        <div>
+                            <div id="div_id_username" class="form-group">
+                                <label for="id_username" class=" requiredField">
+                                Nome utente<span class="asteriskField">*</span>
+                                </label>
+                                <div class="">
+                                    <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" class="textinput textInput form-control" required="" id="id_username">
+                                </div>
+                            </div>
+                            <div id="div_id_password" class="form-group">
+                                <label for="id_password" class=" requiredField">
+                                    Password<span class="asteriskField">*</span>
+                                </label>
+                                <div class="">
+                                    <input type="password" name="password" autocomplete="current-password" class="textinput textInput form-control" required="" id="id_password">
+                                </div>
+                            </div>
+
+                            <input type="submit" value="login" class="btn btn-primary">
+                            <input type="hidden" name="next" value="">
+                        </div></form>
+
+                    <hr>
+                </div>
+            </div>
+
+
+            <br class="mb-4">
+        </div>
+    </div>
+</body>
+</html>

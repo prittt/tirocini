@@ -1,0 +1,233 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+
+<html>
+<head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>
+    Università degli studi di Modena e Reggio Emilia
+</title>
+
+    <style>
+        .title{
+            margin-top:20px !important;
+        }
+    </style>
+
+
+    <style type="text/css">
+        #ResultLabel, #FailureText{
+            display:block;
+        }
+        .buttons{
+            margin-bottom:10px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+<form method="post" action="?lang=it" onsubmit="" id="theForm">
+    <div id="theme-container">
+        <div id="theme-middle">
+            <div id="theme-left" class="hiddenWhenHiddenLau">
+                <div id="criteri"></div>
+            </div>
+            <div id="theme-main" class="masterPageContent">
+                <div id="theme-main-top"></div>
+                <div id="theme-main-content">
+                    <div id="main" class="theMain">
+
+                        <h2 class="iframetitle">Servizio aziende</h2>
+                        <div id="buttonDiv">
+                            <span id="PageText">Per ricevere una risposta via e-mail completa il modulo. I campi con asterisco sono obbligatori.</span>
+                        </div>
+
+                        <div id="form_Contattaci" class="form-horizontal form-registration">
+
+                            <div id="NomeDiv" class="form-group">
+                                <label for="Nome" class="col-sm-3 control-label">
+                                    <label for="Nome" id="NomeLabel">Nome<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Nome" type="text" maxlength="100" id="Nome" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="Nome" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="NomeRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="CognomeDiv" class="form-group">
+                                <label for="Cognome" class="col-sm-3 control-label">
+                                    <label for="Cognome" id="CognomeLabel">Cognome<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Cognome" type="text" maxlength="100" id="Cognome" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="Cognome" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="CognomeRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AziendaDiv" class="form-group">
+                                <label for="Azienda" class="col-sm-3 control-label">
+                                    <label for="Azienda" id="AziendaLabel">Azienda<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Azienda" type="text" maxlength="100" id="Azienda" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="Azienda" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="AziendaRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="FunzionaAziendaleDiv" class="form-group">
+                                <label for="FunzionaAziendale" class="col-sm-3 control-label">
+                                    <label for="FunzionaAziendale" id="FunzionaAziendaleLabel">Funzione aziendale</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$FunzionaAziendale" type="text" maxlength="100" id="FunzionaAziendale" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AttivitaAziendaDiv" class="form-group">
+                                <label for="AttivitaAzienda" class="col-sm-3 control-label">
+                                    <label for="AttivitaAzienda" id="AttivitaAziendaLabel">Attività azienda</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$AttivitaAzienda" type="text" maxlength="100" id="AttivitaAzienda" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="CittaDiv" class="form-group">
+                                <label for="Citta" class="col-sm-3 control-label">
+                                    <label for="Citta" id="CittaLabel">Città</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Citta" type="text" maxlength="100" id="Citta" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="NazioneDiv" class="form-group">
+                                <label for="Nazione" class="col-sm-3 control-label">
+                                    <label for="Nazione" id="NazioneLabel">Nazione</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Nazione" type="text" maxlength="50" id="Nazione" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="EmailDiv" class="form-group">
+                                <label for="Email" class="col-sm-3 control-label">
+                                    <label for="Email" id="EmailLabel">Email<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Email" type="text" maxlength="50" id="Email" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="Email" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="EmailRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+                                        <span data-val-controltovalidate="Email" data-val-errormessage="Formato email non valido" data-val-display="Dynamic" id="EmailRegExp" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|([0-9a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,10})$" style="display:none;">Formato email non valido</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="TelefonoDiv" class="form-group">
+                                <label for="Telefono" class="col-sm-3 control-label">
+                                    <label for="Telefono" id="TelefonoLabel">Telefono</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Telefono" type="text" maxlength="50" id="Telefono" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="CellulareDiv" class="form-group">
+                                <label for="Cellulare" class="col-sm-3 control-label">
+                                    <label for="Cellulare" id="CellulareLabel">Cellulare</label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Cellulare" type="text" maxlength="50" id="Cellulare" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="ArgomentoDiv" class="form-group">
+                                <label for="ArgomentoLabel" class="col-sm-3 control-label">
+                                    <label for="argomentiContatto" id="ArgomentoLabel">Argomento<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                                        <select name="ctl00$ctl00$body$PageContent$myContattaciAziende$argomentiContatto" id="argomentiContatto" class="input-sm">
+                                            <option value="-1"></option>
+                                            <option value="1">Recupero credenziali di accesso</option>
+                                            <option value="2">Disponibilit&#224; elenchi laureati</option>
+                                            <option value="3">Stipula convenzioni per tirocini</option>
+                                            <option value="4">Progetti formativi per tirocini</option>
+                                            <option value="5">Pubblicazione offerte di lavoro/stage</option>
+                                            <option value="6">Registrazione</option>
+                                            <option value="7">Partita Iva non valida</option>
+                                            <option value="8">Altro</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="argomentiContatto" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="ArgomentoValidator" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="-1" style="display:none;">Campo obbligatorio</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="TestoDiv" class="form-group">
+                                <label for="Testo" class="col-sm-3 control-label">
+                                    <label for="Testo" id="TestoLabel" MaxLength="1000">Testo<span class="required">*</span></label>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-7">
+                <textarea name="ctl00$ctl00$body$PageContent$myContattaciAziende$Testo" rows="2" cols="20" id="Testo" class="form-control input-sm">
+</textarea>
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1 static-value">
+                                        <span data-val-controltovalidate="Testo" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="TestoRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</form>
+
+</body>
+</html>

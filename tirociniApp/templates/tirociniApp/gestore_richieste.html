@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Richiesta {{ richiesta.id}}</title>
+</head>
+<body>
+
+    <h1>Gestione richiesta matricola {{ richiesta.matricola }}</h1>
+    <p><b>NOME:</b></p>
+    <p> {{ richiesta.nome }} </p>
+    <p><b>COGNOME:</b></p>
+    <p> {{ richiesta.cognome }} </p>
+    <p><b>CODICE FISCALE:</b></p>
+    <p> {{ richiesta.codice_fiscale }} </p>
+    <p><b>MATRICOLA:</b></p>
+    <p> {{ richiesta.matricola }} </p>
+    <p><b>TUTOR:</b></p>
+    <p>    <b>Nome:</b></p>
+    <p>     {{ richiesta.tutor.nome }} </p>
+    <p>    <b>Cognome:</b></p>
+    <p>     {{ richiesta.tutor.cognome }} </p>
+    <p>    <b>Email:</b></p>
+    <p>     {{ richiesta.tutor.email }} </p>
+    <p><b>SEDE:</b></p>
+    <p> {{ richiesta.sede }} </p>
+    <p><b>DURATA:</b></p>
+    <p> {{ richiesta.durata }} </p><p>ore</p>
+    <p><b>DATA INIZIO ATTIVITA':</b></p>
+    <p> {{ richiesta.data_inizio }} </p>
+    <p><b>DATA FINE ATTIVITA':</b></p>
+    <p> {{ richiesta.data_fine }} </p>
+    <p><b>OBIETTIVI:</b></p>
+    <p> {{ richiesta.obiettivi }} </p>
+    <a href="{{ richiesta.autocertificazione.url }}" download="auto_{{ richiesta.nome }}_{{ richiesta.cognome }}.docx"><button><b>AUTOCERTIFICAZIONE</b></button></a>
+
+
+</body>
+</html>

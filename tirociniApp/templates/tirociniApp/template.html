@@ -1,0 +1,132 @@
+{% load static %}
+<html class=" audio video bgpositionxy boxshadow boxsizing"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>
+	Università degli studi di Modena e Reggio Emilia
+</title>
+        <style>
+            body{
+                margin:0px;
+            }
+        </style>
+    <link type="text/css" media="screen" href="/css/unimore.css?v=20171117175307" rel="stylesheet">
+<link rel="stylesheet" typeof="text/css" href="/css/pushy.css">
+    
+    <style>
+        .title{
+            margin-top:20px !important;
+        }
+    </style>
+</head>
+    <body>
+        <form method="post" action="?lang=it" id="theForm">
+    <div id="theme-container">
+		<div id="theme-top">
+	        <div id="header-container" class="masterPageHeader">
+		        <div id="sito-logo">
+		        </div>
+		        <div id="sito-desc">
+			        <h1>Servizi Placement</h1>
+		        </div>
+	        </div>
+		</div> 
+		<div id="theme-middle">
+			<div id="theme-left" class="hiddenWhenHiddenLau">
+				<div id="criteri"></div>
+				<!-- <leftbar applicazione> -->
+<!-- </leftbar applicazione> -->
+			</div> 
+            <div id="theme-main" class="masterPageContent">
+				<div id="theme-main-top"></div> 
+				<div id="theme-main-content">
+                    <div id="main" class="theMain">
+
+<div id="form_Contattaci" class="form-horizontal form-registration">
+
+    <div id="NomeDiv" class="form-group">
+        <label for="Nome" class="col-sm-3 control-label">
+            <label for="Nome" id="NomeLabel">Nome<span class="required">*</span></label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Nome" type="text" maxlength="100" id="Nome" class="form-control input-sm" value="{{ richiesta.studente.user.first_name }}">
+            </div>
+            <div class="col-sm-4 col-sm-offset-1 static-value">
+                <span data-val-controltovalidate="Nome" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="NomeRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+            </div>
+        </div>
+    </div>
+    <div id="CognomeDiv" class="form-group">
+        <label for="Cognome" class="col-sm-3 control-label">
+            <label for="Cognome" id="CognomeLabel">Cognome<span class="required">*</span></label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Cognome" type="text" maxlength="100" id="Cognome" class="form-control input-sm" value="{{ richiesta.studente.user.last_name }}">
+            </div>
+            <div class="col-sm-4 col-sm-offset-1 static-value">
+                <span data-val-controltovalidate="Cognome" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="CognomeRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+            </div>
+        </div>
+    </div>
+    <div id="AziendaDiv" class="form-group">
+        <label for="Azienda" class="col-sm-3 control-label">
+            <label for="Azienda" id="AziendaLabel">Azienda<span class="required">*</span></label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Azienda" type="text" maxlength="100" id="Azienda" class="form-control input-sm" value="{{ richiesta.studente.matricola }}">
+            </div>
+            <div class="col-sm-4 col-sm-offset-1 static-value">
+                <span data-val-controltovalidate="Azienda" data-val-errormessage="Campo obbligatorio" data-val-display="Dynamic" id="AziendaRequired" class="requiredfield text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Campo obbligatorio</span>
+            </div>
+        </div>
+    </div>
+    <div id="FunzionaAziendaleDiv" class="form-group">
+        <label for="FunzionaAziendale" class="col-sm-3 control-label">
+            <label for="FunzionaAziendale" id="FunzionaAziendaleLabel">Funzione aziendale</label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$FunzionaAziendale" type="text" maxlength="100" id="FunzionaAziendale" class="form-control input-sm" value="{{ richiesta.tutor }}">
+            </div>
+        </div>
+    </div>
+    <div id="AttivitaAziendaDiv" class="form-group">
+        <label for="AttivitaAzienda" class="col-sm-3 control-label">
+            <label for="AttivitaAzienda" id="AttivitaAziendaLabel">Attività azienda</label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$AttivitaAzienda" type="text" maxlength="100" id="AttivitaAzienda" class="form-control input-sm " value="{{ richiesta.data_inizio }}">
+            </div>
+        </div>
+    </div>
+    <div id="CittaDiv" class="form-group">
+        <label for="Citta" class="col-sm-3 control-label">
+            <label for="Citta" id="CittaLabel">Città</label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Citta" type="text" maxlength="100" id="Citta" class="form-control input-sm" value="{{ richiesta.data_fine }}">
+            </div>
+        </div>
+    </div>
+    <div id="NazioneDiv" class="form-group">
+        <label for="Nazione" class="col-sm-3 control-label">
+            <label for="Nazione" id="NazioneLabel">Nazione</label>
+        </label>
+        <div class="col-sm-9">
+            <div class="col-sm-7">
+                <input name="ctl00$ctl00$body$PageContent$myContattaciAziende$Nazione" type="text" maxlength="50" id="Nazione" class="form-control input-sm" value="{{ richiesta.autocertificazione }}">
+            </div>
+        </div>
+    </div>
+                        <div id="poweredByDiv" class="static">
+</div>
+                    </div>
+				</div> 
+				<div id="theme-main-bottom"></div> 
+			</div> 
+        </div>
+    </div>
+        </div></form>
+</body></html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="it">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/base.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/form.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/modulo.css'%}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+    <script src="{% static 'Moduli/jquery.fittext.js'%}"></script>
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    {% if not user.is_authenticated %}
+
+        <meta http-equiv = "refresh" content = "2; url = {% url 'tirociniApp:homepage' %}" />
+    {% endif %}
+
+    {% if user.groups.all.0.name != 'Studente' %}
+        <meta http-equiv = "refresh" content = "2; url = {% url 'tirociniApp:homepage' %}" />
+    {% endif %}
+    {% if richiesta and user.id != richiesta.studente.user.id %}
+        <meta http-equiv = "refresh" content = "0; url = {% url 'tirociniApp:homepage' %}" />
+    {% endif %}
+
+    <meta charset="UTF-8">
+    <title>Richiesta Attività Progettuale</title>
+    <style>
+        .col-sm {
+            float: left;
+            text-align: right;
+            padding-right: 5px;
+            width: 25%;
+            padding-top: 5px;
+            font-weight: 700;
+            display: inline;
+        }
+        .form-control{
+            width: 50%;
+        }
+
+    </style>
+    <script>
+        var studField;
+
+        function update_fields(){
+            //jQuery("h1").fitText(2);
+
+            document.getElementById("id_data_inizio").type="date";
+            document.getElementById("id_data_fine").type="date";
+            var labels = document.getElementsByTagName('LABEL');
+            for (var i = 0; i < labels.length; i++) {
+                labels[i].classList.add("col-sm")
+            }
+
+            std = document.getElementById("id_studente");
+            {%  if studente %}
+                val = {{ studente.id }};
+            {% endif %}
+            std.value = val;
+            std.disabled = true;
+            opt = std.getElementsByTagName("option");
+
+
+            for(i=opt.length-1; i>=0; i--){
+
+                if( String(opt[i].value) != String(val) ){
+                    opt[i].remove();
+                }
+            }
+            document.getElementsByTagName("option")[0].selected=true;
+
+            studField=std.outerHTML;
+
+            {% if richiesta %}
+                document.getElementById("id_tutor").disabled = true;
+                document.getElementById("id_sede").disabled = true;
+                document.getElementById("id_durata").disabled = true;
+                document.getElementById("id_data_inizio").disabled = true;
+                document.getElementById("id_data_fine").disabled = true;
+                document.getElementById("id_obiettivi").disabled = true;
+            {% endif %}
+
+            $( function() {
+                var availableTutors = [
+                    {% for t in tutor_list %}
+                        '{{t.nome}} {{t.cognome}}',
+                    {% endfor %}
+                ];
+
+                var availableSedi= [
+                    {% for s in sedi_list %}
+                        "{{s.nome}}".replaceAll('&quot;','"'),
+                    {% endfor %}
+                ];
+                console.log(availableSedi);
+                $( "#id_tutor" ).autocomplete({
+                    source: availableTutors
+                });
+                $( "#id_sede" ).autocomplete({
+                    source: availableSedi
+                });
+
+                $( "#id_studente").replaceWith('<input type="text" ' +
+                    'name="studente" id="id_studente" value="{{ user.first_name }} {{ user.last_name }}">')
+            } );
+
+
+            if("{{ user.studente.corso.tipo }}" == 'LT') {
+                document.getElementById("id_durata").value = 360;
+                document.getElementById("corso_mod").innerHTML = "Triennale";
+                document.getElementById("cfu_mod").innerHTML = 140;
+            }
+            else {
+                document.getElementById("id_durata").value = 720;
+                document.getElementById("corso_mod").innerHTML = "Magistrale";
+                document.getElementById("cfu_mod").innerHTML = 75;
+            }
+            {% if ore  %}
+                document.getElementById("id_durata").value= {{ ore }};
+            {% endif %}
+            //document.getElementById("id_durata").disabled = true;
+            document.getElementById("id_studente").disabled = true;
+         {% if richiesta %}
+             document.getElementById('id_autocertificazione').disabled=true;
+        {% endif %}
+
+
+
+
+
+        }
+
+        function send() {
+            std = document.getElementById("id_studente");
+            std.outerHTML=studField;
+            std = document.getElementById("id_studente");
+            std.disabled = false;
+            document.getElementById("id_durata").disabled = false;
+            document.getElementById('id_autocertificazione').disabled=false;
+        }
+
+    </script>
+</head>
+ {% if richiesta and user.id != richiesta.studente.user.id %}
+    <body>
+    <h1>NON HAI I PERMESSI NECESSARI PER ACCEDERE A RICHIESTE NON TUE</h1>
+    </body>
+{% else %}
+<body onload="update_fields()">
+<table id="head">
+    <tr>
+        <td class="first"> <a href="{% url 'tirociniApp:homepage' %}"><img id="logo" src="/tirocini/static/images/Sigillo2015.png" /></a></td>
+        <td class="second"> <a href="{% url 'tirociniApp:homepage' %}"><h1 id="title">Modulo di Richiesta per Tirocini ed Attività Progettuali</h1></a></td>
+
+    </tr>
+</table>
+
+    <div id="mainDiv">
+    {% if not user.is_authenticated %}
+        <p>Devi fare il login prima di proseguire</p>
+        <input type="hidden" name="next" value="/modulo/">
+
+    {% elif user.groups.all.0.name != 'Studente' %}
+        <p>Devi essere uno studente per poter inserire una richiesta</p>
+
+    {% else %}
+    <h1>ATTENZIONE! Prima di effettuare questa richiesta occorre registrarsi su <a target="_blank" href="https://www3.almalaurea.it/cgi-bin/lau/cv_enter.pm?LANG=it">
+    AlmaLaurea</a> e aggiornare il proprio CV con il corso di studio corretto.</h1>
+    <form method="post" enctype="multipart/form-data" id="form_modulo">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            {% if field.name != "autocertificazione" %}
+                {% if field.name == "data_inizio" %}
+                    <div class="form-row field-date" style="">
+                        <label class="col-sm" style="">Data inizio e fine attività progettuale</label>
+
+                        {% if form.is_bound %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+
+                        <div style="display: flex;align-items: baseline;justify-content: flex-start;width: 50%;">
+                            <p style="width: fit-content;margin-left: 5%;">dal: </p>
+                            {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {% render_field field class="form-control is-invalid" style="width: 25% ; text-align:center;" required="true" %}
+                                {% else %}
+                                    {% render_field field class="form-control is-valid" style="width: 25%; text-align:center;" required="true" %}
+                                {% endif %}
+                            {% else %}
+                                {% render_field field class="form-control" style="width: 25%;" required="true" %}
+                            {% endif %}
+
+
+
+                {% elif field.name == "data_fine" %}
+
+                            <p style="margin-left: 5%;">al: </p>
+                            {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {% render_field field class="form-control is-invalid" style="width: 25%; text-align:center;" required="true" %}
+                                {% else %}
+                                    {% render_field field class="form-control is-valid" style="width: 25%; text-align:center;" required="true" %}
+                                {% endif %}
+                            {% else %}
+                                {% render_field field class="form-control" style="width: 25%;" required="true" %}
+                            {% endif %}
+                        </div>
+                        {% if form.is_bound %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                {% elif field.name == "durata" %}
+
+                        <div class="form-row field-{{ field.name }}">
+                            {{ field.label_tag }}
+                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                {% if form.is_bound %}
+                                    {% if field.errors %}
+                                        {% render_field field class="form-control is-invalid" style="width: 10%;text-align: center;" required="true" min="0" %}
+                                    {% else %}
+                                        {% render_field field class="form-control is-valid" style="width: 10%;text-align: center;" required="true" min="0" %}
+                                    {% endif %}
+                                {% else %}
+                                    {% render_field field class="form-control" style="width: 10%;text-align: center;" required="true" min="0" %}
+                                {% endif %}
+                                <p style="width: fit-content;margin-left: 1%;">ore</p>
+
+                            </div>
+                            {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+
+                {% else %}
+
+                    <div class="form-row field-{{ field.name }}">
+                        {{ field.label_tag }}
+                    {% if form.is_bound %}
+                        {% if field.errors %}
+                            {% render_field field class="form-control is-invalid" %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% render_field field class="form-control is-valid" %}
+                        {% endif %}
+                    {% else %}
+                        {% render_field field class="form-control" %}
+                    {% endif %}
+
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    </div>
+                {% endif %}
+
+            {% else %}
+                <div class="form-row field-{{ field.nome }}">
+                    {{ field.label_tag }}
+                <table>
+                    <tbody>
+                    <tr style="height: auto;">
+                        <td style="vertical-align: middle;">
+                             {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {% render_field field class="form-control is-invalid" style="width: auto" required="true" %}
+                                {% else %}
+                                    {% render_field field class="form-control is-valid" style="width: auto" required="true" %}
+                                {% endif %}
+                            {% else %}
+                                {% render_field field class="form-control" style="width: auto" required="true" %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <p style="width : 70%;">Consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere,
+                                di formazione o uso di atti falsi, richiamate dall’art. 76 del D.P.R. 445 del 28 dicembre 2000
+                                <b>DICHIARO</b>
+                                di essere iscritto al Corso di Laurea <b id="corso_mod">X</b> e di aver maturato i <a href="https://www.ingmo.unimore.it/site/home/servizi-studenti/ufficio-stage/tirocini-curriculari.html">requisiti necessari</a> per l’attivazione dell’attività progettuale. </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% if form.is_bound %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+        </div>
+        <div class="submit-row">
+            {% if not richiesta %}
+                <button type="submit" name="_inviaDati" class="default" onclick="send()"> Invia richiesta </button>
+            {% endif %}
+        </div>
+    </form>
+    {% endif %}
+    </div>
+</body>
+{% endif %}
+</html>

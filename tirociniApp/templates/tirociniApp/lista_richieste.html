@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Archivio Richieste</title>
+
+    {% load static %}
+
+    {% if not user.is_authenticated %}
+
+        <meta http-equiv = "refresh" content = "2; url = {% url 'tirociniApp:homepage' %}" />
+    {% endif %}
+    {% if user.groups.all.0.name != 'UfficioStage' %}
+        <meta http-equiv = "refresh" content = "2; url = {% url 'tirociniApp:homepage' %}" />
+    {% endif %}
+
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Moduli/list.css' %}">
+</head>
+<body class=" dashboard">
+
+    {% if not user.is_authenticated %}
+        <p>Devi fare il login prima di proseguire</p>
+        <input type="hidden" name="next" value="/modulo/">
+
+    {% elif user.groups.all.0.name != 'UfficioStage' %}
+        <p>Devi far parte dell'Ufficio Stage per poter approvare le richieste</p>
+
+    {% else %}
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name">Attività Progettuali UNIMORE</h1>
+        </div>
+        {% if user.is_authenticated %}
+        <div id="user-tools">
+                Benvenuto,
+                <strong>{% firstof user.first_name %} {% firstof user.last_name %}</strong>.
+
+                <a href="{% url 'tirociniApp:logout' %}?next={% url 'tirociniApp:homepage' %}">Esegui il Logout</a>
+
+        </div>
+        {% endif %}
+
+
+
+    </div>
+
+
+    <main>
+        {% block content %}
+          {% if user.is_authenticated %}
+
+                <div class="module primo">
+                      <table>
+                        <caption>
+                          <a href="" class="section" title="Richieste non ancora visionate">Nuove Richieste</a>
+                        </caption>
+                        {% for r in richieste_nv %}
+                          <tr>
+                            <th scope="row">
+                                <a href="{% url 'tirociniApp:gestione' r.id %}" >{{ r.studente.user.get_full_name }}</a> - {{ r.studente.matricola}} - {{ r.studente.user.email }}
+                            </th>
+                            <th scope="row">
+                                <small>Data inserimento: {{ r.created_at }}</small>
+                            </th>
+                          </tr>
+                        {% empty %}
+                          <tr>
+                            <th scope="row">Nessuna richiesta da gestire</th>
+                          </tr>
+                        {% endfor %}
+                      </table>
+                </div>
+                <div class="module secondo">
+                      <table>
+                        <caption>
+                          <a href="" class="section" title="Richieste visionate">Richieste Confermate</a>
+                        </caption>
+                        {% for r in richieste_v %}
+                          <tr>
+                            <th scope="row">
+                                <a href="{% url 'tirociniApp:gestione' r.id %}" >{{ r.studente.user.get_full_name }}</a> - {{ r.studente.matricola}} - {{ r.studente.user.email }}
+                            </th>
+                            <th scope="row">
+                                <small>Data inserimento: {{ r.created_at }}</small>
+                            </th>
+                          </tr>
+                        {% empty %}
+                          <tr>
+                            <th scope="row">Nessuna richiesta confermata</th>
+                          </tr>
+                        {% endfor %}
+                      </table>
+                </div>
+                <div class="module" style="float:right">
+                      <table>
+                        <caption>
+                          <a href="" class="section" title="Richieste visionate">Richieste Rifiutate</a>
+                        </caption>
+                        {% for r in richieste_r %}
+                          <tr>
+                            <th scope="row">
+                                <a href="{% url 'tirociniApp:gestione' r.id %}" >{{ r.studente.user.get_full_name }}</a> - {{ r.studente.matricola}} - {{ r.studente.user.email }}
+                            </th>
+                            <th scope="row">
+                                <small>Data inserimento: {{ r.created_at }}</small>
+                            </th>
+                          </tr>
+                        {% empty %}
+                          <tr>
+                            <th scope="row">Nessuna richiesta rifiutata</th>
+                          </tr>
+                        {% endfor %}
+                      </table>
+                </div>
+          {% else %}
+              <h1>Devi eseguire l'accesso per procedere.</h1>
+              <h1>Sarai reindirizzato in automatico alla finestra di login.</h1>
+          {% endif %}
+        {% endblock %}
+    </main>
+    {% endif %}
+</body>
+</html>
