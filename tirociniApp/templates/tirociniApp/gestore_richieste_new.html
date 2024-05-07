@@ -26,11 +26,11 @@
         }
 
        function load(){
-           const di= new Date('{{ richiesta.data_inizio|date:"M/d/Y" }}');
+           const di= new Date('{{ richiesta.data_inizio|date:'Y-m-d' }}');
            document.getElementById("id_data_inizio").value = di.toISOString().substring(0,10);
-           const df= new Date('{{ richiesta.data_fine|date:"M/d/Y" }}');
+           const df= new Date('{{ richiesta.data_fine|date:'Y-m-d' }}');
            document.getElementById("id_data_fine").value = df.toISOString().substring(0,10);
-       }
+        }
 
 
 
@@ -40,6 +40,9 @@
 <body onload="load()">
     {% csrf_token %}
 
+{#    <div>#}
+{#        {{ richiesta.data_inizio|date:'m-d-Y' }}#}
+{#    </div>#}
     {% if user.is_authenticated %}
     <div id="content" class="colM">
       <h1>Visualizza richiesta</h1>
