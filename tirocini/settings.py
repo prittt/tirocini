@@ -144,7 +144,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'tirocini.unimore@gmail.com'
 EMAIL_HOST_PASSWORD = get_secret('MailPassword')
 
-LOGIN_REDIRECT_URL='/tirocini/homepage'
+if not RUNSERVER:
+    LOGIN_REDIRECT_URL = '/tirocini/homepage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

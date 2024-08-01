@@ -1,23 +1,37 @@
 from django.contrib import admin
 from tirociniApp.models import Studente, Richiesta, Tutor, Sede, Corso
 
+
 class ListDisplayAllMixin(object):
     def __init__(self, model, admin_site):
         self.list_display = [field.name for field in model._meta.fields if field.name != 'id' and field.editable]
         super(ListDisplayAllMixin, self).__init__(model, admin_site)
 
+
+class RichiestaInline(admin.TabularInline):
+    # template = 'admin/tabular.html'
+    model = Richiesta
+    extra = 0
+
+
 class StudenteAdmin(ListDisplayAllMixin, admin.ModelAdmin):
+    inlines = [RichiestaInline]
     pass
+
 
 class RichiestaAdmin(ListDisplayAllMixin, admin.ModelAdmin):
-    #list_display = [f.name for f in Richiesta._meta.get_fields()]
+    # list_display = [f.name for f in Richiesta._meta.get_fields()]
     pass
 
+
 class CorsoAdmin(ListDisplayAllMixin, admin.ModelAdmin):
+    inlines = [RichiestaInline]
     pass
+
 
 class TutorAdmin(ListDisplayAllMixin, admin.ModelAdmin):
     pass
+
 
 class SedeAdmin(ListDisplayAllMixin, admin.ModelAdmin):
     pass

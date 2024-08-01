@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User,Group
 from django.http import HttpRequest, HttpResponse, HttpResponseServerError
@@ -5,6 +7,7 @@ from django.shortcuts import HttpResponseRedirect, resolve_url
 from django.conf import settings
 from django.urls import reverse
 from django.utils.html import escape
+from datetime import datetime
 
 import urllib.request
 
@@ -75,29 +78,27 @@ def get_shibboleth_dict(field):
 fake_shibboleth_meta = {
     "Shib-Handler": "https://services.ing.unimore.it/Shibboleth.sso",
     "Shib-Application-ID": "default",
-    "Shib-Session-ID": "_8a7c3454fd3969bf01ee2ffc1592128f",
+    "Shib-Session-ID": "_f0b0629d268958177316e4163d8837fa",
     "Shib-Identity-Provider": "https://idp.unimore.it/idp/shibboleth",
-    "Shib-Authentication-Instant": "2022-10-27T14:54:29.700Z",
+    "Shib-Authentication-Instant": "2024-07-31T11:06:08.605Z",
     "Shib-Authentication-Method": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
     "Shib-AuthnContext-Class": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
-    "Shib-Session-Index": "_070b5e7806c7ced1b93cf037eb9e56fd",
-    "Shib-Session-Expires": "1666911269",
-    "Shib-Session-Inactivity": "1666887610",
-    "affiliation": "employee@unimore.it;faculty@unimore.it;member@unimore.it",
-    "cn": "Costantino GRANA",
-    "eppn": "cgrana@unimore.it",
-    "givenName": "Costantino",
-    "mail": "costantino.grana@unimore.it",
-    "ou": "Dipendenti;people;studenti",
-    "persistent-id": "https://idp.unimore.it/idp/shibboleth!https://services.ing.unimore.it/tirocini/sp!LVwumRf4OEuQ6IMkQcPZZgRXILI=",
-    "sn": "GRANA",
-    "uid": "cgrana",
-    "unimoreDiporg2": "{1}{300024}Dipartimento di Ingegneria \"Enzo Ferrari\"",
-    "unimoreDiporg4": "{1}{300122}Dipartimento di Ingegneria \"Enzo Ferrari\"",
-    "unimorecodicefiscale": "GRNCTN76D04F257W",
-    "unimorestudcorso": "{1}20-212",
-    "unimorestuddescrcorso": "{1}Ingegneria informatica (D.M.270/04)",
-    "unimorestudmatricola": "{1}123456",
+    "Shib-Session-Index": "_81f1f72e7767f677e192de64f25f60f4",
+    "Shib-Session-Expires": "1722452768",
+    "Shib-Session-Inactivity": "1722427568",
+    "affiliation": "member@unimore.it;student@unimore.it",
+    "cn": "SEBASTIANO REMELLI",
+    "eppn": "240739@unimore.it",
+    "givenName": "SEBASTIANO",
+    "mail": "240739@studenti.unimore.it",
+    "ou": "people;studenti;Advanced Automotive Engineering",
+    "persistent-id": "https://idp.unimore.it/idp/shibboleth!https://services.ing.unimore.it/tirocini/sp!9YcapL48jkbIRCUnLcbuuiS4fMI=",
+    "sn": "REMELLI",
+    "uid": "240739",
+    "unimorecodicefiscale": "RMLSST98P16G489J",
+    "unimorestudcorso": "{1}20-269",
+    "unimorestuddescrcorso": "{1}Advanced Automotive Engineering",
+    "unimorestudmatricola": "{1}168054",
     "SSL_TLS_SNI": "services.ing.unimore.it",
     "GATEWAY_INTERFACE": "CGI/1.1",
     "SERVER_PROTOCOL": "HTTP/1.1",
@@ -109,13 +110,12 @@ fake_shibboleth_meta = {
     "PATH_TRANSLATED": "/var/www/html/test/",
     "HTTP_HOST": "services.ing.unimore.it",
     "HTTP_CONNECTION": "keep-alive",
-    "HTTP_DNT": "1",
+    "HTTP_CACHE_CONTROL": "max-age=0",
     "HTTP_UPGRADE_INSECURE_REQUESTS": "1",
-    "HTTP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
-    "HTTP_ACCEPT": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "HTTP_SEC_FETCH_SITE": "none",
+    "HTTP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+    "HTTP_ACCEPT": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "HTTP_SEC_FETCH_SITE": "same-site",
     "HTTP_SEC_FETCH_MODE": "navigate",
-    "HTTP_SEC_FETCH_USER": "?1",
     "HTTP_SEC_FETCH_DEST": "document",
     "HTTP_SEC_CH_UA": "\"Chromium\";v=\"106\", \"Google Chrome\";v=\"106\", \"Not;A=Brand\";v=\"99\"",
     "HTTP_SEC_CH_UA_MOBILE": "?0",
@@ -204,25 +204,42 @@ def shibboleth_login(request):
             codici_dict = get_shibboleth_dict(meta["unimorestudcorso"])
             nomi_dict = get_shibboleth_dict(meta["unimorestuddescrcorso"])
             corsi_list = []
-            for k,v in codici_dict.items():
-                corso, created = Corso.objects.get_or_create(codice=v, nome=nomi_dict[k])
+            for k, v in codici_dict.items():
+                if v == '20-CS':  # Skip "Struttura per CORSO SINGOLO"
+                    continue
+                corso, created = Corso.objects.get_or_create(codice=v, defaults={'nome': nomi_dict[k], })
+                # created = True  # Debug!
                 if created:
-                    url = "https://offertaformativa.unimore.it/corso/infoSua?cds_cod=" + v + "&lang=ita"
-                    r = requests.get(url, headers={"Accept-Language": "it", })
+                    url = "https://unimore.coursecatalogue.cineca.it/api/v1/ricercaCorsi"
+                    r = requests.post(url, json={
+                        "searchString": v,
+                        "anno": str(datetime.now().year),
+                        "area": None,
+                        "tipoCorso": None,
+                        "sede": None,
+                        "lingua": None,
+                        "dipartimento": None,
+                        "interateneo": None})
+                    result = json.loads(r.content)
                     try:
-                        htmltext = (r.text.split('<h2 class="marginZero">'))[1].split("</h2>")[0].lower()
+                        tipo_corso_cod = result[0]['subgroups'][0]['cds'][0]['tipo_corso_cod']
+                        if tipo_corso_cod == 'LM':
+                            corso.tipo = "LM"
+                            corso.durata_tirocinio = 720
+                        else:
+                            corso.tipo = "LT"
+                            corso.durata_tirocinio = 360
+                        corso.save()
                     except:
-                        htmltext = ""
-                    if "magistrale" in htmltext:
-                        corso.tipo = "LM"
-                        corso.durata_tirocinio = 720
-                    else:
-                        corso.tipo = "LT"
-                        corso.durata_tirocinio = 360
-                    corso.save()
+                        pass
                 corsi_list.append(corso)
 
-        stud, created = Studente.objects.get_or_create(user=user, corso=corsi_list[0])
+        stud, created = Studente.objects.get_or_create(user=user, defaults={'corso': corsi_list[0], })
+        if not created:
+            if stud.corso != corsi_list[0]:
+                stud.corso = corsi_list[0]
+                stud.save()
+
         if "unimorestudmatricola" in meta:
             stud.matricola = meta["unimorestudmatricola"].split('}')[1]
         if "unimorecodicefiscale" in meta:
