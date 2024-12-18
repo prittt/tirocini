@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         Autocompilazione progetti formativi
-// @namespace    https://github.com/AndreaValentini025/django_websites
-// @version      1.0
+// @namespace    https://github.com/prittt/tirocini
+// @version      2.0
 // @description  Compilazione automatica per richieste di attività progettuali
-// @author       Valentini Andrea & Artoni Alessandro
+// @downloadURL  https://raw.githubusercontent.com/prittt/tirocini/refs/heads/master/TamperScript.js
+// @updateURL    https://raw.githubusercontent.com/prittt/tirocini/refs/heads/master/TamperScript.js
+// @author       Federico Bolelli
 // @match        https://services.ing.unimore.it/tirocini/gestione/*/
 // @match        https://placement.unimore.it/staff/home/ent/tirocini/pf/progettoformativostep1.aspx?lang=it&idAzienda=30000510
 // @grant        GM_setValue
