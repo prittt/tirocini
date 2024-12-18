@@ -69,8 +69,8 @@ function pastePage2(){
    nome_tutor_accademico.value = nome_tutor;
    cognome_tutor_accademico.value = cognome_tutor;
    email_tutor_accademico.value = nome_tutor.toLowerCase().replace(/\s+/g, '') + "." + cognome_tutor.toLowerCase() + "@unimore.it";
-   nome_tutor_aziendale.value = "Massimo";
-   cognome_tutor_aziendale.value = "Borghi";
+   nome_tutor_aziendale.value = "Francesco";
+   cognome_tutor_aziendale.value = "Leali";
    email_tutor_aziendale.value = "direttore.dief@unimore.it";
    referente.value = GM_getValue("referente");
    sede.value = GM_getValue("sede");
